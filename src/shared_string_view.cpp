@@ -20,7 +20,10 @@ shared_string_view::shared_string_view(const char * s, size_t len) : target{make
 shared_string_view::shared_string_view(const string & s) : target{make_shared<string>(s)}, start{0}, len{s.length()} {}
 
 shared_string_view::operator string_view() const {
-  return string_view{*this->target}.substr(this->start, this->len);
+  if (this->target) {
+    return string_view{*this->target}.substr(this->start, this->len);
+  }
+  return ""sv;
 }
 
 size_t shared_string_view::length() const {

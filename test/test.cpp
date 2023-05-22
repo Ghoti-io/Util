@@ -40,7 +40,18 @@ TEST(Constructor, Length) {
     shared_string_view ssv{string("abc")};
     ASSERT_EQ(ssv.length(), 3);
   }
-
+  // Copy constructor
+  {
+    shared_string_view ssv1{"abc"};
+    shared_string_view ssv2{ssv1};
+    ASSERT_EQ(string_view{ssv1}, string_view{ssv2});
+  }
+  // Move constructor
+  {
+    shared_string_view ssv1{"abc"};
+    shared_string_view ssv2{move(ssv1)};
+    ASSERT_NE(string_view{ssv1}, string_view{ssv2});
+  }
 }
 
 TEST(Operator, string_stream) {
@@ -51,6 +62,10 @@ TEST(Operator, string_stream) {
   {
     shared_string_view ssv{"abc 123"};
     ASSERT_NE(string_view{ssv}, "abc 1234"sv);
+  }
+  {
+    shared_string_view ssv{"abc 123"};
+    ASSERT_NE(string_view{ssv}, ""sv);
   }
 }
 
