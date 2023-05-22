@@ -1,7 +1,7 @@
 /**
  * @file
  *
- * Test the general Wave server behavior.
+ * Test the shared_string_view behavior.
  */
 
 #include <sstream>
@@ -76,6 +76,35 @@ TEST(Operator, Extraction) {
     ss << ssv;
     ASSERT_EQ(ss.str(), "abc 123");
   }
+}
+
+TEST(Operator, ThreeWayComparison) {
+  shared_string_view ssv1{"abc 123"};
+  shared_string_view ssv2{"abc 123"};
+  shared_string_view ssv3{"abd 123"};
+
+  // Test various comparison operators.
+  ASSERT_EQ(ssv1, ssv2);
+  ASSERT_NE(ssv1, ssv3);
+  ASSERT_FALSE(ssv1 < ssv2);
+  ASSERT_TRUE(ssv1 <= ssv2);
+  ASSERT_FALSE(ssv1 > ssv2);
+  ASSERT_TRUE(ssv1 >= ssv2);
+  ASSERT_FALSE(ssv2 < ssv1);
+  ASSERT_TRUE(ssv1 != ssv3);
+  ASSERT_FALSE(ssv1 != ssv2);
+  ASSERT_TRUE(ssv3 > ssv2);
+  ASSERT_NE(ssv2, ssv3);
+
+  // Force ssv2 and ssv3 to lose their target to make sure that this won't
+  // cause a segfault.
+  shared_string_view ssv4{move(ssv2)};
+  shared_string_view ssv5{move(ssv3)};
+  ASSERT_NE(ssv4, ssv5);
+  ASSERT_NE(ssv1, ssv2);
+  ASSERT_FALSE(ssv1 < ssv2);
+  ASSERT_TRUE(ssv1 > ssv2);
+  ASSERT_EQ(ssv2, ssv3);
 }
 
 int main(int argc, char** argv) {

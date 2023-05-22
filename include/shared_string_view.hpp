@@ -6,6 +6,7 @@
 #ifndef SSV_HPP
 #define SSV_HPP
 
+#include <compare>
 #include <memory>
 #include <ostream>
 #include <string>
@@ -54,6 +55,22 @@ class shared_string_view {
    */
   size_t length() const;
 
+  /**
+   * Compare two shared_string_view objects.
+   *
+   * @param ssv The right hand side operator.
+   * @return True if the objects have equivalent values, false otherwise.
+   */
+  bool operator==(const shared_string_view & ssv) const;
+
+  /**
+   * Perform a three-way comparison on two shared_string_view objects.
+   *
+   * @param ssv The right hand side operator.
+   * @return A weak ordering indicator of the two objects.
+   */
+  std::weak_ordering operator<=> (const shared_string_view & ssv) const;
+
   private:
   /**
    * The shared target string pointed to by this object.
@@ -70,9 +87,10 @@ class shared_string_view {
    */
   size_t len;
 };
-};
 
 std::ostream & operator<<(std::ostream& out, const Ghoti::shared_string_view & ssv);
+
+};
 
 #endif // SSV_HPP
 
