@@ -5,6 +5,7 @@
  */
 
 #include "shared_string_view.hpp"
+#include <iostream>
 
 using namespace std;
 using namespace Ghoti;
@@ -28,6 +29,13 @@ shared_string_view::operator string_view() const {
 
 size_t shared_string_view::length() const {
   return this->len;
+}
+
+shared_string_view shared_string_view::substr(size_t offset, size_t length) {
+  auto copy{*this};
+  copy.start = min(this->start + offset, this->start + this->len);
+  copy.len = min(this->len - (copy.start - this->start), length);
+  return copy;
 }
 
 bool shared_string_view::operator==(const shared_string_view & ssv) const {

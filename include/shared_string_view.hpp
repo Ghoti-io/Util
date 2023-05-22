@@ -56,6 +56,20 @@ class shared_string_view {
   size_t length() const;
 
   /**
+   * Calculate a substring based on the current shared_string_view.
+   *
+   * If the substring is out of range, then an empty view will be provided.  If
+   * the substring length requested is greater than what is available, then
+   * the returned substring will contain as many characters as possible, within
+   * the limits of the parent string view range.
+   *
+   * @param offset The 0-based offset from which the substring should start.
+   * @param length The length of the substring desired.
+   * @return A new shared_string_view of the requested substring.
+   */
+  shared_string_view substr(size_t offset, size_t length);
+
+  /**
    * Compare two shared_string_view objects.
    *
    * @param ssv The right hand side operator.
