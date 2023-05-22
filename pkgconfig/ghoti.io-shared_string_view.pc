@@ -1,0 +1,7 @@
+Name: Ghoti.io Shared String View
+Description: C++ library providing a string view based on shared pointers to strings.
+Version: 0.0.0
+URL: htts://github.com/Ghoti-io
+Libs: -lghoti.io-shared_string_view
+CFlags: -std=c++20 -L /usr/local/lib/ghoti.io
+
