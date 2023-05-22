@@ -4,8 +4,9 @@
  * Test the general Wave server behavior.
  */
 
-#include<string>
-#include<gtest/gtest.h>
+#include <sstream>
+#include <string>
+#include <gtest/gtest.h>
 #include "shared_string_view.hpp"
 
 using namespace std;
@@ -33,6 +34,32 @@ TEST(Constructor, Length) {
   {
     shared_string_view ssv{"abc", 1};
     ASSERT_EQ(ssv.length(), 1);
+  }
+  // SSV created with a string object.
+  {
+    shared_string_view ssv{string("abc")};
+    ASSERT_EQ(ssv.length(), 3);
+  }
+
+}
+
+TEST(Operator, string_stream) {
+  {
+    shared_string_view ssv{"abc 123"};
+    ASSERT_EQ(string_view{ssv}, "abc 123"sv);
+  }
+  {
+    shared_string_view ssv{"abc 123"};
+    ASSERT_NE(string_view{ssv}, "abc 1234"sv);
+  }
+}
+
+TEST(Operator, Extraction) {
+  {
+    shared_string_view ssv{"abc 123"};
+    stringstream ss;
+    ss << ssv;
+    ASSERT_EQ(ss.str(), "abc 123");
   }
 }
 

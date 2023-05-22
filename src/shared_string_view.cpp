@@ -17,7 +17,17 @@ shared_string_view::shared_string_view(const char * s, size_t len) : target{make
   this->len = this->target->length();
 }
 
+shared_string_view::shared_string_view(const string & s) : target{make_shared<string>(s)}, start{0}, len{s.length()} {}
+
+shared_string_view::operator string_view() const {
+  return string_view{*this->target}.substr(this->start, this->len);
+}
+
 size_t shared_string_view::length() const {
   return this->len;
+}
+
+ostream & operator<<(ostream & out, const shared_string_view & ssv) {
+  return out << string_view{ssv};
 }
 
