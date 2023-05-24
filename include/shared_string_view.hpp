@@ -85,6 +85,14 @@ class shared_string_view {
    */
   std::weak_ordering operator<=> (const shared_string_view & ssv) const;
 
+  /**
+   * Perform an index operation into the target string.
+   *
+   * @param pos The 0-based index position.
+   * @return The character at the position requested.
+   */
+  char operator[](size_t pos) const;
+
   private:
   /**
    * The shared target string pointed to by this object.

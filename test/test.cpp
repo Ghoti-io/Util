@@ -135,6 +135,13 @@ TEST(Method, substr) {
   ASSERT_EQ(ssv.substr(10, 10).substr(3,30), "nopqrst"sv);
 }
 
+TEST(Method, Index) {
+  shared_string_view ssv{"abcdefghijklmnopqrstuvwxyz"};
+  ASSERT_EQ(ssv[0], 'a');
+  ASSERT_EQ(ssv[1], 'b');
+  ASSERT_EQ(ssv[25], 'z');
+}
+
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

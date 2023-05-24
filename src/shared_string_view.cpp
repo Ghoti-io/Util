@@ -56,6 +56,10 @@ std::weak_ordering shared_string_view::operator<=> (const shared_string_view & s
       : std::weak_ordering::equivalent;
 }
 
+char shared_string_view::operator[](size_t pos) const {
+  return (*this->target)[pos];
+}
+
 ostream & Ghoti::operator<<(ostream & out, const shared_string_view & ssv) {
   return out << string_view{ssv};
 }
