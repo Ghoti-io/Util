@@ -60,6 +60,22 @@ char shared_string_view::operator[](size_t pos) const {
   return (*this->target)[pos];
 }
 
+string_view::const_iterator shared_string_view::begin() const {
+  return string_view{*this}.begin();
+}
+
+string_view::const_iterator shared_string_view::end() const {
+  return string_view{*this}.end();
+}
+
+string_view::const_reverse_iterator shared_string_view::rbegin() const {
+  return string_view{*this}.rbegin();
+}
+
+string_view::const_reverse_iterator shared_string_view::rend() const {
+  return string_view{*this}.rend();
+}
+
 ostream & Ghoti::operator<<(ostream & out, const shared_string_view & ssv) {
   return out << string_view{ssv};
 }

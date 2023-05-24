@@ -86,6 +86,34 @@ class shared_string_view {
   std::weak_ordering operator<=> (const shared_string_view & ssv) const;
 
   /**
+   * Provide an iterator from the beginning of the view.
+   *
+   * @return A forward iterator.
+   */
+  std::string_view::const_iterator begin() const;
+
+  /**
+   * Provide an iterator pointing to the end of the view.
+   *
+   * @return An ending iterator.
+   */
+  std::string_view::const_iterator end() const;
+
+  /**
+   * Provide a reverse iterator from the end of the view.
+   *
+   * @return A reverse iterator.
+   */
+  std::string_view::const_reverse_iterator rbegin() const;
+
+  /**
+   * Provide a reverse iterator pointing to the beginning of the view.
+   *
+   * @return An reverse ending iterator.
+   */
+  std::string_view::const_reverse_iterator rend() const;
+
+  /**
    * Perform an index operation into the target string.
    *
    * @param pos The 0-based index position.

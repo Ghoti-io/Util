@@ -135,6 +135,22 @@ TEST(Method, substr) {
   ASSERT_EQ(ssv.substr(10, 10).substr(3,30), "nopqrst"sv);
 }
 
+TEST(Method, ForwardIterator) {
+  size_t i{0};
+  for (auto ch : shared_string_view{"abcdefg"}) {
+    ASSERT_EQ(ch, "abcdefg"sv[i++]);
+  }
+}
+
+TEST(Method, ReverseIterator) {
+  size_t i{6};
+  shared_string_view ssv{"abcdefg"};
+
+  for (auto it = ssv.rbegin(); it != ssv.rend(); ++it) {
+    ASSERT_EQ(*it, "abcdefg"sv[i--]);
+  }
+}
+
 TEST(Method, Index) {
   shared_string_view ssv{"abcdefghijklmnopqrstuvwxyz"};
   ASSERT_EQ(ssv[0], 'a');
