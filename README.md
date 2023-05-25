@@ -90,3 +90,13 @@ For PDF documentation:
 make docs-pdf
 ```
 
+### Viewing the documentation
+If using the WSL2 (on Windows), the documentation can be viewed using the following command:
+```
+wslview docs/html/index.html
+```
+or
+```
+wslview docs/latex/refman.pdf
+```
+

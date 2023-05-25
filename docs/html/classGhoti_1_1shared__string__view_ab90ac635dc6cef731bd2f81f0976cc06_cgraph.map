@@ -1,0 +1,4 @@
+<map id="Ghoti::shared_string_view::substr" name="Ghoti::shared_string_view::substr">
+<area shape="rect" id="node1" title="Calculate a substring based on the current shared_string_view." alt="" coords="5,5,159,47"/>
+<area shape="rect" id="node2" href="$classGhoti_1_1shared__string__view.html#a4bcdec6f77c3b85210bbe5f2b965558f" title="Return the length of the string represented by the view." alt="" coords="207,5,360,47"/>
+</map>
