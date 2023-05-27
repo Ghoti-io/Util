@@ -56,6 +56,22 @@ std::weak_ordering shared_string_view::operator<=> (const shared_string_view & s
       : std::weak_ordering::equivalent;
 }
 
+shared_string_view & shared_string_view::operator+=(const std::string & rhs) {
+  if ((this->start == 0) && (this->len == this->target->length())) {
+    // Allow the string itself to be modified if and only if this view points
+    // to the entirety of the target string.
+    *this->target += rhs;
+  }
+  else {
+    // Otherwise, make a copy of the important part of the original target
+    // string, and append the new string to it.
+    this->target = make_shared<string>(this->target->substr(this->start, this->len) + rhs);
+    this->start = 0;
+  }
+  this->len += rhs.length();
+  return *this;
+}
+
 char shared_string_view::operator[](size_t pos) const {
   return (*this->target)[pos];
 }

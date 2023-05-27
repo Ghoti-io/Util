@@ -86,6 +86,23 @@ class shared_string_view {
   std::weak_ordering operator<=> (const shared_string_view & ssv) const;
 
   /**
+   * Perform a concatenation of the supplied string to the existing string
+   * view object.
+   *
+   * If the target string can be appended to safely, then that will be done.
+   * Otherwise, a new internal string will be created.
+   *
+   * Because this may modify the target string, all previously-provided
+   * `std::string_view` references will be invalidated.  This is similar to the
+   * behavior of `std::string.cstr()`, in which modifying the string will
+   * invalidate the c-string pointer.
+   *
+   * @param rhs A string to be appended to the `shared_string_view` object.
+   * @return The new `shared_string_view` resulting from the concatenation.
+   */
+  shared_string_view & operator+=(const std::string & rhs);
+
+  /**
    * Provide an iterator from the beginning of the view.
    *
    * @return A forward iterator.

@@ -107,6 +107,28 @@ TEST(Operator, ThreeWayComparison) {
   ASSERT_EQ(ssv2, ssv3);
 }
 
+TEST(Operator, PlusEqual) {
+  shared_string_view ssv{"abc 123"};
+  string foo{"foo"};
+
+  // Verify that appending to a substring (that does not reach the end of the
+  // target string) does not append to the target string.
+  auto sub = ssv.substr(0,3);
+  sub += foo;
+  ASSERT_EQ(sub, "abcfoo");
+  ASSERT_EQ(sub.substr(3,3), foo);
+  ASSERT_EQ(ssv, "abc 123");
+
+  // Appending to a substring (at the end of the target string) appends to the
+  // target string.
+  auto numbers = ssv.substr(4,3);
+  ASSERT_EQ(numbers, "123");
+  numbers += "bar";
+  ASSERT_EQ(numbers, "123bar");
+  ssv += foo;
+  ASSERT_EQ(ssv, "abc 123foo");
+}
+
 TEST(Method, substr) {
   shared_string_view ssv{"abcdefghijklmnopqrstuvwxyz"};
 
