@@ -127,6 +127,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1e886acb9f33a2c7fb8f91789ad2c9e2"><td class="memItemLeft" align="right" valign="top">std::weak_ordering&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1shared__string__view.html#a1e886acb9f33a2c7fb8f91789ad2c9e2">operator&lt;=&gt;</a> (const <a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a> &amp;ssv) const</td></tr>
 <tr class="memdesc:a1e886acb9f33a2c7fb8f91789ad2c9e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a three-way comparison on two <a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a> objects.  <a href="classGhoti_1_1shared__string__view.html#a1e886acb9f33a2c7fb8f91789ad2c9e2">More...</a><br /></td></tr>
 <tr class="separator:a1e886acb9f33a2c7fb8f91789ad2c9e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd7183a38587121b942292c663b6a41e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1shared__string__view.html#abd7183a38587121b942292c663b6a41e">operator+=</a> (const std::string &amp;rhs)</td></tr>
+<tr class="memdesc:abd7183a38587121b942292c663b6a41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a concatenation of the supplied string to the existing string view object.  <a href="classGhoti_1_1shared__string__view.html#abd7183a38587121b942292c663b6a41e">More...</a><br /></td></tr>
+<tr class="separator:abd7183a38587121b942292c663b6a41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba455da5a4d2db1274370174aa9e022e"><td class="memItemLeft" align="right" valign="top">std::string_view::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1shared__string__view.html#aba455da5a4d2db1274370174aa9e022e">begin</a> () const</td></tr>
 <tr class="memdesc:aba455da5a4d2db1274370174aa9e022e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide an iterator from the beginning of the view.  <a href="classGhoti_1_1shared__string__view.html#aba455da5a4d2db1274370174aa9e022e">More...</a><br /></td></tr>
 <tr class="separator:aba455da5a4d2db1274370174aa9e022e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -327,6 +330,35 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 
 <p>Provides a string_view variant of the <a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a> object. </p>
 <p>It is up to the programmer to ensure that the <a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a> object remains in scope while the string_view is in use. </p>
+
+</div>
+</div>
+<a id="abd7183a38587121b942292c663b6a41e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd7183a38587121b942292c663b6a41e">&#9670;&nbsp;</a></span>operator+=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a> &amp; shared_string_view::operator+= </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform a concatenation of the supplied string to the existing string view object. </p>
+<p>If the target string can be appended to safely, then that will be done. Otherwise, a new internal string will be created.</p>
+<p>Because this may modify the target string, all previously-provided <code>std::string_view</code> references will be invalidated. This is similar to the behavior of <code>std::string.cstr()</code>, in which modifying the string will invalidate the c-string pointer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>A string to be appended to the <code><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a></code> object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The new <code><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a></code> resulting from the concatenation. </dd></dl>
 
 </div>
 </div>
