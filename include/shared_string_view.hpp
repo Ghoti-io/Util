@@ -75,7 +75,7 @@ class shared_string_view {
    * @param ssv The right hand side operator.
    * @return True if the objects have equivalent values, false otherwise.
    */
-  bool operator==(const shared_string_view & ssv) const;
+  bool operator==(const Ghoti::shared_string_view & ssv) const;
 
   /**
    * Perform a three-way comparison on two shared_string_view objects.
@@ -83,7 +83,7 @@ class shared_string_view {
    * @param ssv The right hand side operator.
    * @return A weak ordering indicator of the two objects.
    */
-  std::weak_ordering operator<=> (const shared_string_view & ssv) const;
+  std::weak_ordering operator<=> (const Ghoti::shared_string_view & ssv) const;
 
   /**
    * Perform a concatenation of the supplied string to the existing string
@@ -100,7 +100,7 @@ class shared_string_view {
    * @param rhs A string to be appended to the `shared_string_view` object.
    * @return The amended `shared_string_view` resulting from the concatenation.
    */
-  shared_string_view & operator+=(const std::string & rhs);
+  shared_string_view & operator+=(const Ghoti::shared_string_view & rhs);
 
   /**
    * Perform a concatenation of the supplied string to the existing string

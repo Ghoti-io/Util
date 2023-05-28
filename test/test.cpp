@@ -127,12 +127,13 @@ TEST(Operator, PlusEqual) {
   numbers += "bar";
   ASSERT_EQ(numbers, "123bar");
 
-  // Concatenating shared_string_views works, too.
-  ASSERT_EQ(ssv + ssv, "abc 123abc 123");
+  // Appending a shared_string_view works, too.
+  ssv += ssv;
+  ASSERT_EQ(ssv, "abc 123abc 123");
 
   // Lastly, the original shared_string_view can still be modified.
   ssv += foo;
-  ASSERT_EQ(ssv, "abc 123foo");
+  ASSERT_EQ(ssv, "abc 123abc 123foo");
 }
 
 TEST(Operator, Plus) {
@@ -149,6 +150,9 @@ TEST(Operator, Plus) {
   // Verify simple concatenation with other types/values.
   ASSERT_EQ(ssv + string{"123"}, "abc123");
   ASSERT_EQ(ssv + "foo", "abcfoo");
+
+  // Concatenating shared_string_views works, too.
+  ASSERT_EQ(ssv + ssv, "abcabc");
 
   // Verify that concatenation did not alter the parent string.
   ASSERT_EQ(ssv, "abc");
