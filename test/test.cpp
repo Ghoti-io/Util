@@ -4,6 +4,7 @@
  * Test the shared_string_view behavior.
  */
 
+#include <map>
 #include <sstream>
 #include <string>
 #include <gtest/gtest.h>
@@ -178,6 +179,42 @@ TEST(Method, Index) {
   ASSERT_EQ(ssv[0], 'a');
   ASSERT_EQ(ssv[1], 'b');
   ASSERT_EQ(ssv[25], 'z');
+}
+
+TEST(Aux, Hash) {
+  // 3 distinct string views, 2 of which have the same value.
+  shared_string_view ssv1{"abc"};
+  shared_string_view ssv2{shared_string_view{"123abc"}.substr(3,3)};
+  shared_string_view ssv3{"123"};
+
+  map<shared_string_view, uint32_t> m{};
+
+  // No value should exist in the map.
+  ASSERT_EQ(m.count(ssv1), 0);
+  ASSERT_EQ(m.count(ssv2), 0);
+  ASSERT_EQ(m.count(ssv3), 0);
+
+  // Insert the value that is shared by `ssv1` and `ssv2`.
+  // Ensure that they evaluate to be the same.
+  m[ssv1] = 42;
+  ASSERT_EQ(m.count(ssv1), 1);
+  ASSERT_EQ(m.count(ssv2), 1);
+  ASSERT_EQ(m.count(ssv3), 0);
+
+  // Insert `ssv3`.  Ensure that it is now present in the map.
+  m[ssv3] = 1;
+  ASSERT_EQ(m.count(ssv3), 1);
+
+  // Increment the value whose key is shared.
+  // Verify that the shared key values consistently access the same data.
+  ++m[ssv2];
+  ASSERT_EQ(m[ssv1], 43);
+  ASSERT_EQ(m[ssv2], 43);
+  ASSERT_EQ(m[ssv3], 1);
+
+  // Verify that the hash is the same as the std::string_view and std::string.
+  ASSERT_EQ(hash<shared_string_view>{}(ssv1), hash<string_view>{}("abc"sv));
+  ASSERT_EQ(hash<shared_string_view>{}(ssv1), hash<string>{}("abc"));
 }
 
 int main(int argc, char** argv) {

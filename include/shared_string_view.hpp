@@ -155,8 +155,26 @@ class shared_string_view {
   size_t len;
 };
 
+/**
+ * Insertion operator.
+ *
+ * @param out The output stream to be written to.
+ * @param ssv The `shared_string_view` to be inserted into the stream.
+ * @return The output stream.
+ */
 std::ostream & operator<<(std::ostream& out, const Ghoti::shared_string_view & ssv);
 
+};
+
+/**
+ * Hashing function, consistent with `std::string_view`.
+ *
+ * @param ssv The `shared_string_view` to be hashed.
+ * @return The hashed value.
+ */
+template<>
+struct std::hash<Ghoti::shared_string_view> {
+  std::size_t operator()(const Ghoti::shared_string_view & ssv) const noexcept;
 };
 
 #endif // SSV_HPP

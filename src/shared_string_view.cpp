@@ -96,3 +96,7 @@ ostream & Ghoti::operator<<(ostream & out, const shared_string_view & ssv) {
   return out << string_view{ssv};
 }
 
+std::size_t std::hash<Ghoti::shared_string_view>::operator()(const Ghoti::shared_string_view & ssv) const noexcept {
+  return hash<string_view>{}(ssv);
+}
+
