@@ -10,7 +10,7 @@
 using namespace std;
 using namespace Ghoti;
 
-shared_string_view::shared_string_view() : target{nullptr}, start{0}, len{0} {}
+shared_string_view::shared_string_view() : target{make_shared<string>("")}, start{0}, len{0} {}
 
 shared_string_view::shared_string_view(const char * s) : target{make_shared<string>(s)}, start{0} {
   this->len = this->target->length();
@@ -19,6 +19,8 @@ shared_string_view::shared_string_view(const char * s) : target{make_shared<stri
 shared_string_view::shared_string_view(const char * s, size_t len) : target{make_shared<string>(s, len)}, start{0} {
   this->len = this->target->length();
 }
+
+shared_string_view::shared_string_view([[maybe_unused]] bool ignore) : target{nullptr}, start{0}, len{0} {}
 
 shared_string_view::shared_string_view(const string & s) : target{make_shared<string>(s)}, start{0}, len{s.length()} {}
 
@@ -80,7 +82,7 @@ shared_string_view & shared_string_view::operator+=(const shared_string_view & r
 }
 
 shared_string_view shared_string_view::operator+(const shared_string_view & rhs) const {
-  shared_string_view next{};
+  shared_string_view next{false};
 
   // If the view includes the entire target string, then we don't have to
   // use substr(), which avoids making a copy of the string.

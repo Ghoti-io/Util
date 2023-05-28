@@ -16,6 +16,13 @@ namespace Ghoti {
 class shared_string_view {
   public:
   /**
+   * Default Constructor
+   *
+   * Initializes using an empty string.
+   */
+  shared_string_view();
+
+  /**
    * Constructor
    *
    * @param s A C-string used to construct the string.
@@ -153,8 +160,11 @@ class shared_string_view {
    *
    * This constructor is private because it will create an object whose target
    * is not initialized, which should not be done in general.
+   *
+   * @param ignore Only used to denote that this constructor is intentionally
+   *   being called.
    */
-  shared_string_view();
+  explicit shared_string_view(bool);
 
   /**
    * The shared target string pointed to by this object.

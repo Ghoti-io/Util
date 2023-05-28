@@ -14,6 +14,12 @@ using namespace std;
 using namespace Ghoti;
 
 TEST(Constructor, Length) {
+  // SSV created with no arguments.
+  {
+    shared_string_view ssv{};
+    ASSERT_EQ(ssv.length(), 0);
+    ASSERT_EQ(ssv, "");
+  }
   // SSV created with a C-string.
   {
     shared_string_view ssv{""};
