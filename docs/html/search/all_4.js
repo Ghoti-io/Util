@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['rbegin_9',['rbegin',['../classGhoti_1_1shared__string__view.html#a6e7d25912e2cd12fe326b42c4f9600df',1,'Ghoti::shared_string_view']]],
-  ['rend_10',['rend',['../classGhoti_1_1shared__string__view.html#a84b7692cbd19d9e90c2a6ff0d96f0fd9',1,'Ghoti::shared_string_view']]]
+  ['operator_2b_3d_5',['operator+=',['../classGhoti_1_1shared__string__view.html#abd7183a38587121b942292c663b6a41e',1,'Ghoti::shared_string_view']]],
+  ['operator_3c_3c_6',['operator&lt;&lt;',['../shared__string__view_8hpp.html#a1ca6b2d32e9ac7688ec958375061ac15',1,'Ghoti']]],
+  ['operator_3c_3d_3e_7',['operator&lt;=&gt;',['../classGhoti_1_1shared__string__view.html#a1e886acb9f33a2c7fb8f91789ad2c9e2',1,'Ghoti::shared_string_view']]],
+  ['operator_3d_3d_8',['operator==',['../classGhoti_1_1shared__string__view.html#a9d8138f50059c1aa19de8f9039a975dd',1,'Ghoti::shared_string_view']]],
+  ['operator_5b_5d_9',['operator[]',['../classGhoti_1_1shared__string__view.html#a987bad210f27930c7788d1adf4b395b3',1,'Ghoti::shared_string_view']]],
+  ['string_5fview_10',['string_view',['../classGhoti_1_1shared__string__view.html#a40193d831416d406c0a8ec8ef2a5ae0b',1,'Ghoti::shared_string_view']]]
 ];

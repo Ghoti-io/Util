@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['operator_2b_3d_4',['operator+=',['../classGhoti_1_1shared__string__view.html#abd7183a38587121b942292c663b6a41e',1,'Ghoti::shared_string_view']]],
-  ['operator_3c_3d_3e_5',['operator&lt;=&gt;',['../classGhoti_1_1shared__string__view.html#a1e886acb9f33a2c7fb8f91789ad2c9e2',1,'Ghoti::shared_string_view']]],
-  ['operator_3d_3d_6',['operator==',['../classGhoti_1_1shared__string__view.html#a9d8138f50059c1aa19de8f9039a975dd',1,'Ghoti::shared_string_view']]],
-  ['operator_5b_5d_7',['operator[]',['../classGhoti_1_1shared__string__view.html#a987bad210f27930c7788d1adf4b395b3',1,'Ghoti::shared_string_view']]],
-  ['string_5fview_8',['string_view',['../classGhoti_1_1shared__string__view.html#a40193d831416d406c0a8ec8ef2a5ae0b',1,'Ghoti::shared_string_view']]]
+  ['len_3',['len',['../classGhoti_1_1shared__string__view.html#a4fe6fb216fdadf07a6e9798a5bb96bb0',1,'Ghoti::shared_string_view']]],
+  ['length_4',['length',['../classGhoti_1_1shared__string__view.html#a4bcdec6f77c3b85210bbe5f2b965558f',1,'Ghoti::shared_string_view']]]
 ];
