@@ -10,6 +10,8 @@
 using namespace std;
 using namespace Ghoti;
 
+shared_string_view::shared_string_view() : target{nullptr}, start{0}, len{0} {}
+
 shared_string_view::shared_string_view(const char * s) : target{make_shared<string>(s)}, start{0} {
   this->len = this->target->length();
 }
@@ -70,6 +72,23 @@ shared_string_view & shared_string_view::operator+=(const std::string & rhs) {
   }
   this->len += rhs.length();
   return *this;
+}
+
+shared_string_view shared_string_view::operator+(const std::string & rhs) {
+  shared_string_view next{};
+
+  if ((this->start == 0) && (this->len == this->target->length())) {
+    // If the view includes the entire target string, then we don't have to
+    // use substr(), which avoids making a copy of the string.
+    next.target = make_shared<string>(*this->target + rhs);
+  }
+  else {
+    // Otherwise, make a copy of the important part of the original target
+    // string, and append the new string to it.
+    next.target = make_shared<string>(this->target->substr(this->start, this->len) + rhs);
+  }
+  next.len = next.target->length();
+  return next;
 }
 
 char shared_string_view::operator[](size_t pos) const {

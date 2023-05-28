@@ -87,7 +87,7 @@ class shared_string_view {
 
   /**
    * Perform a concatenation of the supplied string to the existing string
-   * view object.
+   * view object and apply it to the existing string view object.
    *
    * If the target string can be appended to safely, then that will be done.
    * Otherwise, a new internal string will be created.
@@ -98,9 +98,18 @@ class shared_string_view {
    * invalidate the c-string pointer.
    *
    * @param rhs A string to be appended to the `shared_string_view` object.
-   * @return The new `shared_string_view` resulting from the concatenation.
+   * @return The amended `shared_string_view` resulting from the concatenation.
    */
   shared_string_view & operator+=(const std::string & rhs);
+
+  /**
+   * Perform a concatenation of the supplied string to the existing string
+   * view object.  Return a new string view.
+   *
+   * @param rhs A string to be appended to the `shared_string_view` object.
+   * @return The new `shared_string_view` resulting from the concatenation.
+   */
+  shared_string_view operator+(const std::string & rhs);
 
   /**
    * Provide an iterator from the beginning of the view.
@@ -139,6 +148,14 @@ class shared_string_view {
   char operator[](size_t pos) const;
 
   private:
+  /**
+   * Private constructor.
+   *
+   * This constructor is private because it will create an object whose target
+   * is not initialized, which should not be done in general.
+   */
+  shared_string_view();
+
   /**
    * The shared target string pointed to by this object.
    */

@@ -130,6 +130,25 @@ TEST(Operator, PlusEqual) {
   ASSERT_EQ(ssv, "abc 123foo");
 }
 
+TEST(Operator, Plus) {
+  shared_string_view ssv{"abc"};
+
+  ASSERT_EQ(ssv, "abc");
+
+  // Verify simple concatenation.
+  ASSERT_EQ(ssv + "123", "abc123");
+
+  // Verify that concatenation did not alter the parent string.
+  ASSERT_EQ(ssv, "abc");
+
+  // Verify simple concatenation with other types/values.
+  ASSERT_EQ(ssv + string{"123"}, "abc123");
+  ASSERT_EQ(ssv + "foo", "abcfoo");
+
+  // Verify that concatenation did not alter the parent string.
+  ASSERT_EQ(ssv, "abc");
+}
+
 TEST(Method, substr) {
   shared_string_view ssv{"abcdefghijklmnopqrstuvwxyz"};
 
