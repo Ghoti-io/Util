@@ -8,7 +8,7 @@ var classGhoti_1_1shared__string__view =
     [ "end", "classGhoti_1_1shared__string__view.html#a8020ac49303481ad7aae3f007b2d84fc", null ],
     [ "length", "classGhoti_1_1shared__string__view.html#a4bcdec6f77c3b85210bbe5f2b965558f", null ],
     [ "operator std::string_view", "classGhoti_1_1shared__string__view.html#a40193d831416d406c0a8ec8ef2a5ae0b", null ],
-    [ "operator+", "classGhoti_1_1shared__string__view.html#ad8bd9575f3c4b6d03ac392e8d52194c7", null ],
+    [ "operator+", "classGhoti_1_1shared__string__view.html#a9d5c71bbaea2c9e696dc42d86b23c70a", null ],
     [ "operator+=", "classGhoti_1_1shared__string__view.html#abd7183a38587121b942292c663b6a41e", null ],
     [ "operator<=>", "classGhoti_1_1shared__string__view.html#a1e886acb9f33a2c7fb8f91789ad2c9e2", null ],
     [ "operator==", "classGhoti_1_1shared__string__view.html#a9d8138f50059c1aa19de8f9039a975dd", null ],

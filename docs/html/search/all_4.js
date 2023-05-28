@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['operator_2b_5',['operator+',['../classGhoti_1_1shared__string__view.html#ad8bd9575f3c4b6d03ac392e8d52194c7',1,'Ghoti::shared_string_view']]],
+  ['operator_2b_5',['operator+',['../classGhoti_1_1shared__string__view.html#a9d5c71bbaea2c9e696dc42d86b23c70a',1,'Ghoti::shared_string_view']]],
   ['operator_2b_3d_6',['operator+=',['../classGhoti_1_1shared__string__view.html#abd7183a38587121b942292c663b6a41e',1,'Ghoti::shared_string_view']]],
   ['operator_3c_3c_7',['operator&lt;&lt;',['../shared__string__view_8hpp.html#a1ca6b2d32e9ac7688ec958375061ac15',1,'Ghoti']]],
   ['operator_3c_3d_3e_8',['operator&lt;=&gt;',['../classGhoti_1_1shared__string__view.html#a1e886acb9f33a2c7fb8f91789ad2c9e2',1,'Ghoti::shared_string_view']]],
