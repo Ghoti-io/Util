@@ -74,19 +74,20 @@ shared_string_view & shared_string_view::operator+=(const std::string & rhs) {
   return *this;
 }
 
-shared_string_view shared_string_view::operator+(const std::string & rhs) {
+shared_string_view shared_string_view::operator+(const shared_string_view & rhs) const {
   shared_string_view next{};
 
-  if ((this->start == 0) && (this->len == this->target->length())) {
-    // If the view includes the entire target string, then we don't have to
-    // use substr(), which avoids making a copy of the string.
-    next.target = make_shared<string>(*this->target + rhs);
-  }
-  else {
-    // Otherwise, make a copy of the important part of the original target
-    // string, and append the new string to it.
-    next.target = make_shared<string>(this->target->substr(this->start, this->len) + rhs);
-  }
+  // If the view includes the entire target string, then we don't have to
+  // use substr(), which avoids making a copy of the string.
+  next.target = make_shared<string>(
+    ((this->start == 0) && (this->len == this->target->length())
+      ? *this->target
+      : this->target->substr(this->start, this->len)) + 
+    ((rhs.start == 0) && (rhs.len == rhs.target->length())
+      ? *rhs.target
+      : rhs.target->substr(rhs.start, rhs.len)
+    ));
+
   next.len = next.target->length();
   return next;
 }

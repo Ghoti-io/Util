@@ -126,6 +126,11 @@ TEST(Operator, PlusEqual) {
   ASSERT_EQ(numbers, "123");
   numbers += "bar";
   ASSERT_EQ(numbers, "123bar");
+
+  // Concatenating shared_string_views works, too.
+  ASSERT_EQ(ssv + ssv, "abc 123abc 123");
+
+  // Lastly, the original shared_string_view can still be modified.
   ssv += foo;
   ASSERT_EQ(ssv, "abc 123foo");
 }

@@ -109,7 +109,7 @@ class shared_string_view {
    * @param rhs A string to be appended to the `shared_string_view` object.
    * @return The new `shared_string_view` resulting from the concatenation.
    */
-  shared_string_view operator+(const std::string & rhs);
+  shared_string_view operator+(const Ghoti::shared_string_view & rhs) const;
 
   /**
    * Provide an iterator from the beginning of the view.
