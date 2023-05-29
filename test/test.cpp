@@ -137,9 +137,13 @@ TEST(Operator, PlusEqual) {
   ssv += ssv;
   ASSERT_EQ(ssv, "abc 123abc 123");
 
-  // Lastly, the original shared_string_view can still be modified.
+  // The original shared_string_view can still be modified.
   ssv += foo;
   ASSERT_EQ(ssv, "abc 123abc 123foo");
+
+  // Adding a char works, too.
+  ssv += '!';
+  ASSERT_EQ(ssv, "abc 123abc 123foo!");
 }
 
 TEST(Operator, Plus) {

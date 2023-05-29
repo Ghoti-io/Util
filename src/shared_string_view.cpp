@@ -81,6 +81,22 @@ shared_string_view & shared_string_view::operator+=(const shared_string_view & r
   return *this;
 }
 
+shared_string_view & shared_string_view::operator+=(char rhs) {
+  if ((this->start == 0) && (this->len == this->target->length())) {
+    // Allow the string itself to be modified if and only if this view points
+    // to the entirety of the target string.
+    *this->target += rhs;
+  }
+  else {
+    // Otherwise, make a copy of the important part of the original target
+    // string, and append the new string to it.
+    this->target = make_shared<string>(this->target->substr(this->start, this->len) + rhs);
+    this->start = 0;
+  }
+  ++this->len;
+  return *this;
+}
+
 shared_string_view shared_string_view::operator+(const shared_string_view & rhs) const {
   shared_string_view next{false};
 

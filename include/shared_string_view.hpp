@@ -110,6 +110,23 @@ class shared_string_view {
   shared_string_view & operator+=(const Ghoti::shared_string_view & rhs);
 
   /**
+   * Perform a concatenation of the supplied character to the existing string
+   * view object and apply it to the existing string view object.
+   *
+   * If the target string can be appended to safely, then that will be done.
+   * Otherwise, a new internal string will be created.
+   *
+   * Because this may modify the target string, all previously-provided
+   * `std::string_view` references will be invalidated.  This is similar to the
+   * behavior of `std::string.cstr()`, in which modifying the string will
+   * invalidate the c-string pointer.
+   *
+   * @param rhs A character to be appended to the `shared_string_view` object.
+   * @return The amended `shared_string_view` resulting from the concatenation.
+   */
+  shared_string_view & operator+=(char rhs);
+
+  /**
    * Perform a concatenation of the supplied string to the existing string
    * view object.  Return a new string view.
    *
