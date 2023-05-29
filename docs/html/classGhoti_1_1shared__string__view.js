@@ -10,6 +10,7 @@ var classGhoti_1_1shared__string__view =
     [ "length", "classGhoti_1_1shared__string__view.html#a4bcdec6f77c3b85210bbe5f2b965558f", null ],
     [ "operator std::string_view", "classGhoti_1_1shared__string__view.html#a40193d831416d406c0a8ec8ef2a5ae0b", null ],
     [ "operator+", "classGhoti_1_1shared__string__view.html#a9d5c71bbaea2c9e696dc42d86b23c70a", null ],
+    [ "operator+=", "classGhoti_1_1shared__string__view.html#ae89046054a972e1951924606edb553d7", null ],
     [ "operator+=", "classGhoti_1_1shared__string__view.html#a4afcc2632d6c483f77ff343431678d7f", null ],
     [ "operator<=>", "classGhoti_1_1shared__string__view.html#a7a01c48f3c9bf8225accd3ed3670854a", null ],
     [ "operator==", "classGhoti_1_1shared__string__view.html#a84019c7bd20bffb2087d0b7e825b5e2b", null ],

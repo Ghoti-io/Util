@@ -1,5 +1,0 @@
-<map id="include/shared_string_view.hpp" name="include/shared_string_view.hpp">
-<area shape="rect" id="node1" title="Header file containing the definitions of the shared_string_view class." alt="" coords="110,5,271,47"/>
-<area shape="rect" id="node2" href="$shared__string__view_8cpp.html" title="Define the shared_string_view class." alt="" coords="5,95,203,121"/>
-<area shape="rect" id="node3" href="$test_8cpp.html" title="Test the shared_string_view behavior." alt="" coords="227,95,330,121"/>
-</map>

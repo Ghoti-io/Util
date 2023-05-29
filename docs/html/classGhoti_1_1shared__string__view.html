@@ -134,6 +134,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4afcc2632d6c483f77ff343431678d7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1shared__string__view.html#a4afcc2632d6c483f77ff343431678d7f">operator+=</a> (const <a class="el" href="classGhoti_1_1shared__string__view.html">Ghoti::shared_string_view</a> &amp;rhs)</td></tr>
 <tr class="memdesc:a4afcc2632d6c483f77ff343431678d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a concatenation of the supplied string to the existing string view object and apply it to the existing string view object.  <a href="classGhoti_1_1shared__string__view.html#a4afcc2632d6c483f77ff343431678d7f">More...</a><br /></td></tr>
 <tr class="separator:a4afcc2632d6c483f77ff343431678d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae89046054a972e1951924606edb553d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1shared__string__view.html#ae89046054a972e1951924606edb553d7">operator+=</a> (char rhs)</td></tr>
+<tr class="memdesc:ae89046054a972e1951924606edb553d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a concatenation of the supplied character to the existing string view object and apply it to the existing string view object.  <a href="classGhoti_1_1shared__string__view.html#ae89046054a972e1951924606edb553d7">More...</a><br /></td></tr>
+<tr class="separator:ae89046054a972e1951924606edb553d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d5c71bbaea2c9e696dc42d86b23c70a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGhoti_1_1shared__string__view.html#a9d5c71bbaea2c9e696dc42d86b23c70a">operator+</a> (const <a class="el" href="classGhoti_1_1shared__string__view.html">Ghoti::shared_string_view</a> &amp;rhs) const</td></tr>
 <tr class="memdesc:a9d5c71bbaea2c9e696dc42d86b23c70a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a concatenation of the supplied string to the existing string view object.  <a href="classGhoti_1_1shared__string__view.html#a9d5c71bbaea2c9e696dc42d86b23c70a">More...</a><br /></td></tr>
 <tr class="separator:a9d5c71bbaea2c9e696dc42d86b23c70a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -429,8 +432,37 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 
 </div>
 </div>
+<a id="ae89046054a972e1951924606edb553d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae89046054a972e1951924606edb553d7">&#9670;&nbsp;</a></span>operator+=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a> &amp; shared_string_view::operator+= </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform a concatenation of the supplied character to the existing string view object and apply it to the existing string view object. </p>
+<p>If the target string can be appended to safely, then that will be done. Otherwise, a new internal string will be created.</p>
+<p>Because this may modify the target string, all previously-provided <code>std::string_view</code> references will be invalidated. This is similar to the behavior of <code>std::string.cstr()</code>, in which modifying the string will invalidate the c-string pointer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>A character to be appended to the <code><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a></code> object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The amended <code><a class="el" href="classGhoti_1_1shared__string__view.html">shared_string_view</a></code> resulting from the concatenation. </dd></dl>
+
+</div>
+</div>
 <a id="a4afcc2632d6c483f77ff343431678d7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4afcc2632d6c483f77ff343431678d7f">&#9670;&nbsp;</a></span>operator+=()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4afcc2632d6c483f77ff343431678d7f">&#9670;&nbsp;</a></span>operator+=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
