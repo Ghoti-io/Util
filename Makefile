@@ -130,7 +130,7 @@ install: ## Install the library globally, requires sudo
 docs: ## Generate the documentation in the ./docs subdirectory
 	doxygen
 
-docs-pdf: docs ## Generate the documentation as a pdf, in ./docs/latex/refman.pdf
+docs-pdf: docs ## Generate the documentation as a pdf, in ./docs/shared_string_view-docs.pdf
 	cd ./docs/latex/ && make
 	mv -f ./docs/latex/refman.pdf ./docs/shared_string_view-docs.pdf
 
