@@ -26,6 +26,8 @@ all: $(APP_DIR)/$(TARGET) ## Build the shared library
 ####################################################################
 # Dependency Variables
 ####################################################################
+DEP_ERROROR = \
+	include/util/errorOr.hpp
 DEP_SSV = \
 	include/util/shared_string_view.hpp
 
@@ -57,6 +59,14 @@ $(APP_DIR)/$(TARGET): \
 ####################################################################
 # Unit Tests
 ####################################################################
+
+$(APP_DIR)/test-errorOr: \
+				test/test-errorOr.cpp \
+				$(DEP_ERROROR) \
+				$(APP_DIR)/$(TARGET)
+	@echo "\n### Compiling ErrorOr Test ###"
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(UTILLIBRARY)
 
 $(APP_DIR)/test-ssv: \
 				test/test-ssv.cpp \
@@ -96,12 +106,14 @@ test-watch: ## Watch the file directory for changes and run the unit tests
 
 test: ## Make and run the Unit tests
 test: \
+				$(APP_DIR)/test-errorOr \
 				$(APP_DIR)/test-ssv
 	@echo "\033[0;32m"
 	@echo "############################"
 	@echo "### Running normal tests ###"
 	@echo "############################"
 	@echo "\033[0m"
+	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-errorOr --gtest_brief=1
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-ssv --gtest_brief=1
 
 clean: ## Remove all contents of the build directories.

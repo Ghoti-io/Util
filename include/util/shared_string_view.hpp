@@ -3,8 +3,8 @@
  * Header file containing the definitions of the shared_string_view class.
  */
 
-#ifndef SSV_HPP
-#define SSV_HPP
+#ifndef GHOTI_UTIL_SHAREDSTRINGVIEW_HPP
+#define GHOTI_UTIL_SHAREDSTRINGVIEW_HPP
 
 #include <compare>
 #include <memory>
@@ -221,5 +221,5 @@ struct std::hash<Ghoti::shared_string_view> {
   std::size_t operator()(const Ghoti::shared_string_view & ssv) const noexcept;
 };
 
-#endif // SSV_HPP
+#endif // GHOTI_UTIL_SHAREDSTRINGVIEW_HPP
 
