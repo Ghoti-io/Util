@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['len_3',['len',['../classGhoti_1_1shared__string__view.html#a4fe6fb216fdadf07a6e9798a5bb96bb0',1,'Ghoti::shared_string_view']]],
-  ['length_4',['length',['../classGhoti_1_1shared__string__view.html#a4bcdec6f77c3b85210bbe5f2b965558f',1,'Ghoti::shared_string_view']]]
+  ['hash_3c_20ghoti_3a_3ashared_5fstring_5fview_20_3e_6',['hash&lt; Ghoti::shared_string_view &gt;',['../structstd_1_1hash_3_01Ghoti_1_1shared__string__view_01_4.html',1,'std']]]
 ];

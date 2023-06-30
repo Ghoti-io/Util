@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['shared_5fstring_5fview_22',['shared_string_view',['../classGhoti_1_1shared__string__view.html',1,'Ghoti']]]
+  ['hash_3c_20ghoti_3a_3ashared_5fstring_5fview_20_3e_30',['hash&lt; Ghoti::shared_string_view &gt;',['../structstd_1_1hash_3_01Ghoti_1_1shared__string__view_01_4.html',1,'std']]]
 ];

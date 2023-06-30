@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Shared String View", "index.html", [
+  [ "Util", "index.html", [
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['end_1',['end',['../classGhoti_1_1shared__string__view.html#a8020ac49303481ad7aae3f007b2d84fc',1,'Ghoti::shared_string_view']]]
+  ['defaulterror_1',['defaultError',['../classGhoti_1_1Util_1_1ErrorOr.html#a0188938829a9197181f981ec5375e996',1,'Ghoti::Util::ErrorOr']]]
 ];
