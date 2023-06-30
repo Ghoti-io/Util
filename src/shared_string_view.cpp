@@ -4,7 +4,7 @@
  * Define the shared_string_view class.
  */
 
-#include "shared_string_view.hpp"
+#include "util/shared_string_view.hpp"
 #include <iostream>
 
 using namespace std;

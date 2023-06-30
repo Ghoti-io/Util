@@ -1,14 +1,21 @@
-# Ghoti.io `shared_string_view`
-Ghoti.io (*pronounced [fish](https://en.wikipedia.org/wiki/Ghoti)*) `shared_string_view` is a dynamically-linked, C++ library.
+# Ghoti.io `Util`
+Ghoti.io (*pronounced [fish](https://en.wikipedia.org/wiki/Ghoti)*) `Util` is a C++20 library containing the generic, non-OS-specific classes used by the Ghoti project.  The classes it contains are as follows:
 
-This library extends the ideas of the [`std::string_view`](https://en.cppreference.com/w/cpp/string/basic_string_view) introduced in C++17.  The drawback to the `std::string_view` is that it requires the programmer to ensure that the string remains allocated while the `string_view` itself is in use.  For situations in which strings are passed around long-lived objects, this limitation makes the `std::string_view` useless and its performance advantages tantalizingly out-of-reach.
+ - `shared_string_view`: is a dynamically-linked, C++ library.
+ - `ErrorOr` a wrapper around C++17 `std::variant`s to represent either an error or a valid response.
+
+## `shared_string_view`
+
+This class extends the ideas of the [`std::string_view`](https://en.cppreference.com/w/cpp/string/basic_string_view) introduced in C++17.  The drawback to the `std::string_view` is that it requires the programmer to ensure that the string remains allocated while the `string_view` itself is in use.  For situations in which strings are passed around long-lived objects, this limitation makes the `std::string_view` useless and its performance advantages tantalizingly out-of-reach.
 
 The features that make this library worth using are:
  - **Memory safety via `std::shared_ptr<>`.**  As long as there is a `Ghoti::shared_string_view` referencing the string pointer, then the string is guaranteed to be present.
  - **Thread safety.** The `Ghoti::shared_string_pointer` object is thread safe.  That is, it is write-only, and the reference counts used by the internal `std::shared_ptr<std::string>` are themselves thread safe.
  - **Minimal but useful methods and operators.**  Immediately useful access methods are supported such as the `[]` operator and forward and reverse iterators (allowing for use in ranged-for expressions).  For more versatile usage, any `shared_string_view` object can be cast to a `std::string_view`, which makes many additional methods available through the STL-provided methods.
 
-## Example Code
+Yes, the underscores break the CamelCase approach used throughout the library, in order to be consistent with `std::string_view`.
+
+### Example Code
 
 Assume the file is called `main.cpp`.  Also assume that the library has been compiled and installed per the instructions at the end of this README.md.
 
@@ -42,7 +49,7 @@ int main() {
 }
 ```
 
-### Compile and run the example
+#### Compile and run the example
 
 ```
 g++ `pkg-config --libs --cflags ghoti.io-shared_string_view` main.cpp -o main
@@ -50,27 +57,27 @@ g++ `pkg-config --libs --cflags ghoti.io-shared_string_view` main.cpp -o main
 ./main
 ```
 
-### Sample Output
+#### Sample Output
 ```
 c
  
 1
 ```
 
-## Compiling the code
+### Compiling the code
 
-### Download from Github
+#### Download from Github
 ```
-git clone https://github.com/Ghoti-io/shared_string_view.git
+git clone https://github.com/Ghoti-io/Util.git
 ```
 
-### Compile and install the library (Ubuntu 22.04+)
+#### Compile and install the library (Ubuntu 22.04+)
 ```
 make
 sudo make install
 ```
 
-## Make and run the tests
+### Make and run the tests
 ```
 make test
 ```
@@ -80,7 +87,7 @@ During development, it is helpful to recompile and run tests every time a file i
 make test-watch
 ```
 
-## Compiling documentation
+### Compiling documentation
 Documentation can be created using Doxygen.
 ```
 make docs
@@ -97,6 +104,6 @@ wslview docs/html/index.html
 ```
 or
 ```
-wslview docs/latex/refman.pdf
+wslview docs/latex/util-docs.pdf
 ```
 

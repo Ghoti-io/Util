@@ -1,0 +1,7 @@
+Name: Ghoti.io Util
+Description: C++ library providing generic, non-OS-specific classes for the Ghoti project
+Version: 0.0.0
+URL: htts://github.com/Ghoti-io/Util
+Libs: -lghoti.io-util
+CFlags: -std=c++20 -L/usr/local/lib/ghoti.io
+

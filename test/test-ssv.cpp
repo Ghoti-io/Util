@@ -8,7 +8,7 @@
 #include <sstream>
 #include <string>
 #include <gtest/gtest.h>
-#include "shared_string_view.hpp"
+#include "util/shared_string_view.hpp"
 
 using namespace std;
 using namespace Ghoti;
