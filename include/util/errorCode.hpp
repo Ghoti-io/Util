@@ -22,8 +22,16 @@ enum class ErrorCondition {
  * List of error codes this library may generate.
  */
 enum class ErrorCode {
+  // HasParameters
   PARAMETER_NOT_FOUND = 1,
   PARAMETER_HAS_WRONG_TYPE,
+  // File
+  NO_FILE_PATH_SPECIFIED,
+  FILE_DOES_NOT_EXIST,
+  FILE_EXISTS_AT_TARGET_PATH,
+  FILE_COULD_NOT_BE_CLOSED,
+  FILE_COULD_NOT_BE_OPENED,
+  ERROR_WRITING_TO_FILE,
 };
 
 /**
@@ -108,7 +116,8 @@ namespace std {
    * @param rhs The Ghoti::Util::error_code to compare.
    * @return True if they are equal, false otherwise.
    */
-  bool operator==(const std::error_code & lhs, Ghoti::Util::ErrorCode rhs);
+  bool operator==(const std::error_code & lhs, const Ghoti::Util::ErrorCode & rhs);
+  bool operator==(const std::errc & lhs, const Ghoti::Util::ErrorCode & rhs);
 }
 
 

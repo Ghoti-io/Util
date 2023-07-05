@@ -44,7 +44,11 @@ std::error_condition make_error_condition(ErrorCode e) {
   return std::error_condition(static_cast<int>(e), Util::getErrorCategory());
 }
 
-bool std::operator==(const std::error_code & lhs, ErrorCode rhs) {
+bool std::operator==(const std::error_code & lhs, const ErrorCode & rhs) {
   return lhs == ::make_error_code(rhs);
+}
+
+bool std::operator==(const std::errc & lhs, const ErrorCode & rhs) {
+  return make_error_code(lhs) == ::make_error_code(rhs);
 }
 

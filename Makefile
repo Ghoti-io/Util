@@ -14,6 +14,7 @@ TARGET := $(SO_NAME).$(MINOR_VERSION)
 
 INCLUDE := -I include/
 LIBOBJECTS := $(OBJ_DIR)/errorCode.o \
+							$(OBJ_DIR)/file.o \
 							$(OBJ_DIR)/shared_string_view.o
 
 TESTFLAGS := `pkg-config --libs --cflags gtest`
@@ -31,6 +32,9 @@ DEP_ERRORCODE = \
 	include/util/errorCode.hpp
 DEP_ERROROR = \
 	include/util/errorOr.hpp
+DEP_FILE = \
+	$(DEP_ERRORCODE) \
+	include/util/file.hpp
 DEP_HASPARAMETERS = \
 	$(DEP_ERRORCODE) \
 	$(DEP_ERROROR) \
@@ -55,6 +59,10 @@ $(OBJ_DIR)/shared_string_view.o: \
 				src/shared_string_view.cpp \
 				$(DEP_SSV)
 
+$(OBJ_DIR)/file.o: \
+				src/file.cpp \
+				$(DEP_FILE)
+
 ####################################################################
 # Shared Library
 ####################################################################
@@ -68,32 +76,58 @@ $(APP_DIR)/$(TARGET): \
 	@ln -f -s $(SO_NAME) $(APP_DIR)/$(BASE_NAME)
 
 ####################################################################
+# Helper data files
+####################################################################
+$(APP_DIR)/fileExists.txt:
+	@mkdir -p $(@D)
+	echo "Hello World" > $(APP_DIR)/fileExists.txt
+
+####################################################################
 # Unit Tests
 ####################################################################
 
+OBJDEP_ERRORCODE = \
+	$(OBJ_DIR)/errorCode.o
+
 $(APP_DIR)/test-errorOr: \
 				test/test-errorOr.cpp \
-				$(DEP_ERROROR) \
-				$(APP_DIR)/$(TARGET)
+				$(DEP_ERROROR)
 	@echo "\n### Compiling ErrorOr Test ###"
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(UTILLIBRARY)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS)
+
+OBJDEP_HASPARAMETERS = \
+	$(OBJDEP_ERRORCODE)
 
 $(APP_DIR)/test-hasParameters: \
 				test/test-hasParameters.cpp \
 				$(DEP_HASPARAMETERS) \
-				$(OBJ_DIR)/errorCode.o
+				$(OBJDEP_HASPARAMETERS)
 	@echo "\n### Compiling HasParameters Test ###"
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(OBJ_DIR)/errorCode.o
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(OBJDEP_HASPARAMETERS)
+
+OBJDEP_FILE = \
+	$(OBJDEP_ERRORCODE) \
+	$(OBJ_DIR)/file.o
+
+$(APP_DIR)/test-file: \
+				test/test-file.cpp \
+				$(APP_DIR)/fileExists.txt \
+				$(OBJDEP_FILE)
+	@echo "\n### Compiling File Test ###"
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(OBJDEP_FILE)
+
+OBJDEP_SSV = \
+	$(OBJ_DIR)/shared_string_view.o
 
 $(APP_DIR)/test-ssv: \
 				test/test-ssv.cpp \
-				$(DEP_SSV) \
-				$(APP_DIR)/$(TARGET)
+				$(OBJDEP_SSV)
 	@echo "\n### Compiling Shared String View Test ###"
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(UTILLIBRARY)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(OBJDEP_SSV)
 
 ####################################################################
 # Commands
@@ -127,6 +161,7 @@ test: ## Make and run the Unit tests
 test: \
 				$(APP_DIR)/test-errorOr \
 				$(APP_DIR)/test-hasParameters \
+				$(APP_DIR)/test-file \
 				$(APP_DIR)/test-ssv
 	@echo "\033[0;32m"
 	@echo "############################"
@@ -135,6 +170,7 @@ test: \
 	@echo "\033[0m"
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-errorOr --gtest_brief=1
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-hasParameters --gtest_brief=1
+	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-file --gtest_brief=1
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-ssv --gtest_brief=1
 
 clean: ## Remove all contents of the build directories.
