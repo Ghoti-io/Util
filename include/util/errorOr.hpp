@@ -60,10 +60,16 @@ class ErrorOr {
     return std::get<T>(this->value);
   }
 
+  const T * operator ->() const {
+    return &std::get<T>(this->value);
+  }
+
+
   /**
    * Indicate whether or not the non-error type is set.
    *
-   * @return `false` if value is a `std::error_code`, `true` otherwise.
+   * @return `true` if value is set, `false` if it is an error.
+   *   This is the behavior of `std::optional` and `std::shared_ptr`.
    */
   operator bool() const noexcept {
     return std::holds_alternative<std::error_code>(this->value)

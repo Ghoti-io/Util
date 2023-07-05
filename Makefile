@@ -13,7 +13,8 @@ SO_NAME := $(BASE_NAME).$(MAJOR_VERSION)
 TARGET := $(SO_NAME).$(MINOR_VERSION)
 
 INCLUDE := -I include/
-LIBOBJECTS := $(OBJ_DIR)/shared_string_view.o
+LIBOBJECTS := $(OBJ_DIR)/errorCode.o \
+							$(OBJ_DIR)/shared_string_view.o
 
 TESTFLAGS := `pkg-config --libs --cflags gtest`
 
@@ -26,8 +27,14 @@ all: $(APP_DIR)/$(TARGET) ## Build the shared library
 ####################################################################
 # Dependency Variables
 ####################################################################
+DEP_ERRORCODE = \
+	include/util/errorCode.hpp
 DEP_ERROROR = \
 	include/util/errorOr.hpp
+DEP_HASPARAMETERS = \
+	$(DEP_ERRORCODE) \
+	$(DEP_ERROROR) \
+	include/util/hasParameters.hpp
 DEP_SSV = \
 	include/util/shared_string_view.hpp
 
@@ -39,6 +46,10 @@ $(LIBOBJECTS) :
 	@echo "\n### Compiling $@ ###"
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -MMD -o $@ -fPIC
+
+$(OBJ_DIR)/errorCode.o: \
+				src/errorCode.cpp \
+				$(DEP_ERRORCODE)
 
 $(OBJ_DIR)/shared_string_view.o: \
 				src/shared_string_view.cpp \
@@ -67,6 +78,14 @@ $(APP_DIR)/test-errorOr: \
 	@echo "\n### Compiling ErrorOr Test ###"
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(UTILLIBRARY)
+
+$(APP_DIR)/test-hasParameters: \
+				test/test-hasParameters.cpp \
+				$(DEP_HASPARAMETERS) \
+				$(OBJ_DIR)/errorCode.o
+	@echo "\n### Compiling HasParameters Test ###"
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(OBJ_DIR)/errorCode.o
 
 $(APP_DIR)/test-ssv: \
 				test/test-ssv.cpp \
@@ -107,6 +126,7 @@ test-watch: ## Watch the file directory for changes and run the unit tests
 test: ## Make and run the Unit tests
 test: \
 				$(APP_DIR)/test-errorOr \
+				$(APP_DIR)/test-hasParameters \
 				$(APP_DIR)/test-ssv
 	@echo "\033[0;32m"
 	@echo "############################"
@@ -114,6 +134,7 @@ test: \
 	@echo "############################"
 	@echo "\033[0m"
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-errorOr --gtest_brief=1
+	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-hasParameters --gtest_brief=1
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-ssv --gtest_brief=1
 
 clean: ## Remove all contents of the build directories.
