@@ -93,7 +93,7 @@ class HasParameters {
   /**
    * The constructor.
    */
-  HasParameters() : parameterValues{} {}
+  HasParameters() : parameterValues{}, inheritFrom{} {}
 
   /**
    * Provide a default value for the provided parameter key.
@@ -110,16 +110,25 @@ class HasParameters {
 
   /**
    * Gets the named parameter if it exists, checking locally first, then
-   * checking the global defaults.
+   * checking the local defaults, then the inherited defaults (if set).
    *
    * @param parameter The parameter to get.
    * @return The parameter value if it exists.
    */
   virtual Ghoti::Util::ErrorOr<std::any> getParameterAny(const T & parameter) {
+    // Search explicitly-set local values.
     if (this->parameterValues.contains(parameter)) {
       return this->parameterValues[parameter];
     }
-    return getParameterDefault(parameter);
+
+    // Search default local values.
+    auto localDefault = this->getParameterDefault(parameter);
+    if (localDefault || !this->inheritFrom) {
+      return localDefault;
+    }
+
+    // Search inherited values.
+    return this->inheritFrom->getParameterAny(parameter);
   }
 
 
@@ -154,6 +163,31 @@ class HasParameters {
   }
 
   /**
+   * Remove an explicitly-set parameter value.
+   *
+   * Default values are not altered.
+   */
+  virtual HasParameters & clearParameter(const T & parameter) {
+    if (this->parameterValues.contains(parameter)) {
+      this->parameterValues.erase(parameter);
+    }
+    return *this;
+  }
+
+  /**
+   * Set a parent HasParameter object to inherit default values from.
+   *
+   * This parent object will be checked only if the current object does not
+   * have a value explicitly set, or if the current object does not have its
+   * own default set (by overriding HasParameters.getDefaultParameter()).
+   *
+   * @param inheritFrom The HasParameter object to inherit from.
+   */
+  virtual void setInheritFrom(HasParameters<T> * inheritFrom) noexcept {
+    this->inheritFrom = inheritFrom;
+  }
+
+  /**
    * Get the current explicitly-set parameters and their values.
    *
    * @return The current explicitly-set parameters.
@@ -167,6 +201,11 @@ class HasParameters {
    * Store explicitly set parameter key/value pairs.
    */
   ParameterMap<T> parameterValues;
+
+  /**
+   * Used to support an inheritance chain of where to look for default values.
+   */
+  HasParameters * inheritFrom;
 };
 
 }

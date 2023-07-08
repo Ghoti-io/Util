@@ -125,6 +125,63 @@ TEST(HasParam, Set) {
   }
 }
 
+TEST(HasParam, Inheritance) {
+  {
+    HasParam p1{};
+    HasParamNoDefaults p2{};
+
+    // Validate default behavior.
+    ASSERT_TRUE(p1.getParameterAny(Param::TEST1));
+    ASSERT_FALSE(p2.getParameterAny(Param::TEST1));
+
+    // Validate setting inheritance.
+    p2.setInheritFrom(&p1);
+    ASSERT_TRUE(p2.getParameterAny(Param::TEST1));
+    ASSERT_EQ(*p2.getParameter<uint32_t>(Param::TEST1), 1.);
+    ASSERT_ANY_THROW(*p2.getParameter<double>(Param::TEST1));
+
+    // Clear the inheritance.
+    p2.setInheritFrom(nullptr);
+    ASSERT_FALSE(p2.getParameterAny(Param::TEST1));
+    ASSERT_ANY_THROW(*p2.getParameter<uint32_t>(Param::TEST1));
+  }
+  {
+    // Validate that explicitly set local values are respected.
+    HasParam p1{};
+    HasParamNoDefaults p2{};
+
+    p2.setParameter(Param::TEST1, uint32_t{42});
+    p1.setInheritFrom(&p2);
+
+    ASSERT_EQ(*p1.getParameter<uint32_t>(Param::TEST1), 1);
+    ASSERT_EQ(*p2.getParameter<uint32_t>(Param::TEST1), 42);
+  }
+}
+
+TEST(HasParam, ClearParamValue) {
+  {
+    // Validate that a cleared parameter reverts to the default.
+    HasParam p{};
+    ASSERT_EQ(*p.getParameter<uint32_t>(Param::TEST1), 1);
+    p.setParameter(Param::TEST1, string{"howdy"});
+    ASSERT_EQ(*p.getParameter<string>(Param::TEST1), "howdy");
+    p.clearParameter(Param::TEST1);
+    ASSERT_EQ(*p.getParameter<uint32_t>(Param::TEST1), 1);
+  }
+  {
+    // Validate that a cleared parameter reverts to nothing if no default
+    // exists.
+    HasParam p{};
+    ASSERT_FALSE(p.getParameterAny(Param::TEST3));
+    ASSERT_ANY_THROW(*p.getParameter<uint32_t>(Param::TEST3));
+    p.setParameter(Param::TEST1, string{"howdy"});
+    ASSERT_EQ(*p.getParameter<string>(Param::TEST1), "howdy");
+    p.clearParameter(Param::TEST1);
+    ASSERT_FALSE(p.getParameterAny(Param::TEST3));
+    ASSERT_ANY_THROW(*p.getParameter<uint32_t>(Param::TEST3));
+  }
+}
+
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
