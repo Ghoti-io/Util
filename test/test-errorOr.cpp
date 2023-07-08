@@ -13,12 +13,33 @@
 using namespace std;
 using namespace Ghoti;
 
+// https://akrzemi1.wordpress.com/2017/07/12/your-own-error-code/
+// https://akrzemi1.wordpress.com/2017/08/12/your-own-error-condition/
+
 namespace Ghoti::Test {
 enum class ErrorCode {
   NOERROR = 0,
-  ERROR1,
+  ERROR1 = 10,
   ERROR2,
+  ERROR3 = 20,
 };
+
+enum class ErrorCondition {
+  NOERROR = 0,
+  CONDITION1,
+  CONDITION2
+};
+}
+
+namespace std {
+template <>
+struct is_error_code_enum<Ghoti::Test::ErrorCode> : true_type {};
+
+template <>
+struct is_error_condition_enum<Ghoti::Test::ErrorCondition> : true_type {};
+}
+
+namespace Ghoti::Test {
 
 class ErrorCategory : public std::error_category {
   public:
@@ -36,6 +57,20 @@ class ErrorCategory : public std::error_category {
       ? description[ec]
       : "";
   }
+  bool equivalent(const std::error_code & ec, int cond) const noexcept {
+    const error_category & errCat = error_code{ErrorCode{}}.category();
+    if (ec.category() == errCat) {
+      return cond == (ec.value() / 10);
+    }
+    return false;
+  }
+  bool equivalent(int ec, const std::error_condition & cond) const noexcept {
+    const error_category & errCat = error_condition{ErrorCondition{}}.category();
+    if (cond.category() == errCat) {
+      return (ec / 10) == cond.value();
+    }
+    return false;
+  }
 };
 
 static const ErrorCategory constErrorCategory{};
@@ -43,14 +78,31 @@ static const ErrorCategory constErrorCategory{};
 std::error_code make_error_code(Ghoti::Test::ErrorCode ec) {
   return {static_cast<int>(ec), constErrorCategory};
 }
+std::error_condition make_error_condition(Ghoti::Test::ErrorCondition ec) {
+  return {static_cast<int>(ec), constErrorCategory};
 }
-
-namespace std {
-template <>
-struct is_error_code_enum<Ghoti::Test::ErrorCode> : true_type {};
 }
 
 using namespace Ghoti::Test;
+
+TEST(Error, BasicFunctionality) {
+  ASSERT_EQ(ErrorCode::ERROR1, ErrorCode::ERROR1);
+  ASSERT_NE(ErrorCode::ERROR1, ErrorCode::ERROR2);
+  ASSERT_TRUE(ErrorCode::ERROR1 == ErrorCode::ERROR1);
+  ASSERT_FALSE(ErrorCode::ERROR1 != ErrorCode::ERROR1);
+  ASSERT_TRUE(error_code{ErrorCode::ERROR1} == ErrorCondition::CONDITION1);
+
+  ASSERT_EQ(error_code{ErrorCode::ERROR1}, ErrorCondition::CONDITION1);
+  ASSERT_EQ(error_code{ErrorCode::ERROR2}, ErrorCondition::CONDITION1);
+  ASSERT_NE(error_code{ErrorCode::ERROR3}, ErrorCondition::CONDITION1);
+
+  ASSERT_FALSE(error_code{ErrorCode::ERROR1} == ErrorCondition::CONDITION2);
+  ASSERT_NE(error_code{ErrorCode::ERROR1}, ErrorCondition::CONDITION2);
+
+  ASSERT_NE(error_code{ErrorCode::ERROR1}, ErrorCondition::CONDITION2);
+  ASSERT_NE(error_code{ErrorCode::ERROR2}, ErrorCondition::CONDITION2);
+  ASSERT_EQ(error_code{ErrorCode::ERROR3}, ErrorCondition::CONDITION2);
+}
 
 TEST(ErrorOr, Constructor) {
   {
