@@ -179,6 +179,7 @@ clean: ## Remove all contents of the build directories.
 	-@rm -rvf $(GEN_DIR)/*
 
 install: ## Install the library globally, requires sudo
+install: all
 	# Install the Shared Library
 	@mkdir -p /usr/local/lib/ghoti.io
 	@cp $(APP_DIR)/$(TARGET) /usr/local/lib/ghoti.io/
