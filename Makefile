@@ -35,6 +35,10 @@ DEP_ERROROR = \
 DEP_FILE = \
 	$(DEP_ERRORCODE) \
 	include/util/file.hpp
+DEP_ANYMAP = \
+	$(DEP_ERRORCODE) \
+	$(DEP_ERROROR) \
+	include/util/anyMap.hpp
 DEP_HASPARAMETERS = \
 	$(DEP_ERRORCODE) \
 	$(DEP_ERROROR) \
@@ -95,6 +99,17 @@ $(APP_DIR)/test-errorOr: \
 	@echo "\n### Compiling ErrorOr Test ###"
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS)
+
+OBJDEP_ANYMAP = \
+	$(OBJDEP_ERRORCODE)
+
+$(APP_DIR)/test-anyMap: \
+				test/test-anyMap.cpp \
+				$(DEP_ANYMAP) \
+				$(OBJDEP_ANYMAP)
+	@echo "\n### Compiling AnyMap Test ###"
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LDFLAGS) $(TESTFLAGS) $(OBJDEP_ANYMAP)
 
 OBJDEP_HASPARAMETERS = \
 	$(OBJDEP_ERRORCODE)
@@ -160,6 +175,7 @@ test-watch: ## Watch the file directory for changes and run the unit tests
 test: ## Make and run the Unit tests
 test: \
 				$(APP_DIR)/test-errorOr \
+				$(APP_DIR)/test-anyMap \
 				$(APP_DIR)/test-hasParameters \
 				$(APP_DIR)/test-file \
 				$(APP_DIR)/test-ssv
@@ -169,6 +185,7 @@ test: \
 	@echo "############################"
 	@echo "\033[0m"
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-errorOr --gtest_brief=1
+	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-anyMap --gtest_brief=1
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-hasParameters --gtest_brief=1
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-file --gtest_brief=1
 	env LD_LIBRARY_PATH="$(APP_DIR)" $(APP_DIR)/test-ssv --gtest_brief=1

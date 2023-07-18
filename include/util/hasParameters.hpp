@@ -4,11 +4,10 @@
  * Header file for declaring the hasParameters class.
  */
 
-#ifndef GHOTI_WAVE_HASPARAMETERS_HPP
-#define GHOTI_WAVE_HASPARAMETERS_HPP
+#ifndef GHOTI_UTIL_HASPARAMETERS_HPP
+#define GHOTI_UTIL_HASPARAMETERS_HPP
 
 #include <any>
-#include <optional>
 #include <unordered_map>
 #include "errorCode.hpp"
 #include "errorOr.hpp"
@@ -45,7 +44,7 @@ using ParameterMap = std::unordered_map<T, std::any>;
  *
  * class FooWithDefaults : public Ghoti::Wave::HasParameters<Foo> {
  *   public:
- *   optional<any> getParameterDefault(const Foo & p) {
+ *   ErrorOr<any> getParameterDefault(const Foo & p) {
  *     if (p == Foo::GIMME_A_INT) {
  *       return int{1};
  *     }
@@ -62,8 +61,8 @@ using ParameterMap = std::unordered_map<T, std::any>;
  * @code{cpp}
  * class FooWithDefaults : public Ghoti::Wave::HasParameters<Foo> {
  *   public:
- *   optional<any> getParameterDefault(const Foo & p) {
- *     unordered_map<Foo, optional<any>> defaults{
+ *   ErrorOr<any> getParameterDefault(const Foo & p) {
+ *     unordered_map<Foo, ErrorOr<any>> defaults{
  *       {Foo::GIMME_A_INT, {int{1}}},
  *       {Foo::GIMME_A_STRING, {string{"foo"}}},
  *     };
@@ -83,9 +82,10 @@ using ParameterMap = std::unordered_map<T, std::any>;
  * }
  * @endcode
  *
- * Remember that `getParameter()` returns an `optional<any>` and
- * `getParameters<type>()` returns an `optional<type>`.  In either case,
- * you should verify that the optional value is set before use.
+ * Remember that `getParameter()` returns a `Ghoti::Util::ErrorOr<any>` and
+ * `getParameters<type>()` returns a `Ghoti::Util::ErrorOr<type>`.  In either
+ * case, you should verify that the value exists before dereferencing and
+ * using the value.
  */
 template <typename T>
 class HasParameters {
@@ -98,7 +98,7 @@ class HasParameters {
   /**
    * Provide a default value for the provided parameter key.
    *
-   * The default behavior of this function is to only return an empty optional
+   * The default behavior of this function is to only return an error
    * value.  The intent is for this to be overridden by subclasses.
    *
    * @param parameter The parameter key to fetch.
@@ -113,7 +113,7 @@ class HasParameters {
    * checking the local defaults, then the inherited defaults (if set).
    *
    * @param parameter The parameter to get.
-   * @return The parameter value if it exists.
+   * @return The parameter value if it exists, otherwise error.
    */
   virtual Ghoti::Util::ErrorOr<std::any> getParameterAny(const T & parameter) {
     // Search explicitly-set local values.
@@ -135,11 +135,11 @@ class HasParameters {
   /**
    * Get the parameter as a specified type.
    *
-   * The result is returned as an optional.  If there is no parameter value,
-   * then the optional value will be false.
+   * The result is returned as a `Ghoti::Util::ErrorOr`.  If there is no
+   * parameter value, then the error value will be `false`.
    *
    * @param parameter The parameter value to get.
-   * @return The (optional) parameter value.
+   * @return The parameter value if it exists, otherwise error.
    */
   template<class U>
   const Ghoti::Util::ErrorOr<U> getParameter(const T & parameter) {
@@ -210,5 +210,5 @@ class HasParameters {
 
 }
 
-#endif // GHOTI_WAVE_HASPARAMETERS_HPP
+#endif // GHOTI_UTIL_HASPARAMETERS_HPP
 
